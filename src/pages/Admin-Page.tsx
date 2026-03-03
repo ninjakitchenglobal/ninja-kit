@@ -27,6 +27,8 @@ const AdminPage = () => {
     getProducts();
   }, []);
 
+  console.log(productDetails);
+
   return (
     <section>
       <div className="p-5">
@@ -77,13 +79,22 @@ const AdminPage = () => {
             onChange={handleChange}
             className="py-2 px-4 border rounded-lg w-full"
           />
-          <input
-            type="text"
+
+          <select
             name="category"
-            placeholder="Product category"
-            onChange={handleChange}
+            id="category"
             className="py-2 px-4 border rounded-lg w-full"
-          />
+            onChange={handleChange}
+          >
+            <option value="">Select a product category</option>
+            <option value="popular">Popular</option>
+            <option value="recommendations">Recommendations</option>
+            <option value="kitchenware">Kitchenware</option>
+            <option value="bundle-and-save">Bundle and save</option>
+            <option value="accessories-and-parts">Accessories and Parts</option>
+            <option value="blenders-and-juicers">Blenders and Juicers</option>
+            <option value="kitchen-appliances">Kitchen Appliances</option>
+          </select>
 
           <button
             onClick={addProduct}
