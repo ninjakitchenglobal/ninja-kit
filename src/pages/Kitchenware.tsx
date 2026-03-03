@@ -24,7 +24,7 @@ const Kitchenware = () => {
         </section>
       ) : (
         <section>
-          <div className="flex flex-wrap items-center gap-4 p-5 mt-15 md:mt-30 md:p-10 lg:p-15 xl:p-20 justify-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-10 p-5 mt-15 md:mt-30 md:p-10 lg:p-15 xl:p-20 justify-center md:justify-between">
             {products?.map((item: IProduct, i: number) => {
               return (
                 <ProductCard
