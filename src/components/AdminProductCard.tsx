@@ -41,7 +41,9 @@ const AdminProductCard = ({
       </span>
 
       <span>
-        <h3 className="font-semibold text-lg text-gray-800">{title}</h3>
+        <h3 className="font-semibold text-lg text-gray-800">
+          {title.slice(0, 25) + '...'}
+        </h3>
         <p className="mt-2 text-gray-700">${price}</p>
       </span>
 
