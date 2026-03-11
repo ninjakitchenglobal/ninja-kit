@@ -64,7 +64,7 @@ const ProductPage = () => {
     <main>
       <CombinedHeader />
 
-      <section className="bg-gray-100 h-screen mt-15 p-5 md:mt-30 md:p-10 lg:p-15 xl:px-30">
+      <section className="h-screen mt-15 p-5 md:mt-30 md:p-10 lg:p-15 xl:px-30">
         <div>
           <h1 className="text-xl font-semibold text-gray-700 lg:text-2xl">
             {' '}
@@ -104,10 +104,12 @@ const ProductPage = () => {
                 BUY NOW{' '}
               </span>
             </span>
-
-            <span className="block text-gray-700">{description}</span>
           </div>
         </div>
+
+        <span className="block text-gray-700 text-sm mt-20">{description}</span>
+
+        <div className="h-20"></div>
       </section>
     </main>
   );

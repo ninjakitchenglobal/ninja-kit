@@ -9,13 +9,94 @@ import { Link } from 'react-router';
 
 //STATE MANAGEMENT
 import { useAppSelector } from '../lib/redux/hooks';
+import { useState } from 'react';
+
+import { DEV_API } from '../lib/utils/api-url';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import type IProduct from '../interfaces/IProduct';
 
 const DesktopHeader = () => {
   const cart = useAppSelector((state) => state.cartReducer);
+  const [searchParams, setSearchParams] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchData, setSearchData] = useState<IProduct[]>();
+
+  const handleSearchChange = (e: any) => {
+    setSearchParams(e.target.value);
+
+    if (isLoading) {
+      return;
+    }
+
+    if (searchParams) {
+      setTimeout(searchProducts, 2000);
+    } else {
+      return;
+    }
+  };
+
+  const searchProducts = async () => {
+    try {
+      setIsModalOpen(true);
+      setIsLoading(true);
+      const res = await axios.get(
+        `${DEV_API}/product/product-search/${searchParams}`,
+      );
+      setSearchData(res.data.data);
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.response.message);
+      setIsLoading(false);
+      setIsModalOpen(false);
+    }
+  };
 
   return (
-    <header className="p-5 bg-white fixed top-0 left-0 w-full z-50">
-      <section className="flex items-center justify-between">
+    <header
+      onClick={() => {
+        setIsModalOpen(false);
+      }}
+      className="p-5 bg-white fixed top-0 left-0 w-full z-50"
+    >
+      <section className="flex items-center justify-between relative">
+        {/* SEARCH MODAL */}
+        {isModalOpen ? (
+          <div className="absolute top-10 left-[22%] h-70 w-150 bg-white overflow-y-scroll">
+            {isLoading ? (
+              <div className="flex items-center justify-center relative top-15">
+                <span className="loading loading-ring loading-xl w-25 text-gray-500 block"></span>
+              </div>
+            ) : (
+              searchData?.map((item: IProduct, i: number) => {
+                return (
+                  <Link to={''} key={i} className="hover:bg-gray-200">
+                    <div className="flex items-center gap-2 mb-3 px-5 py-3 hover:bg-gray-200">
+                      <span>
+                        <img src={item.picture} alt="" className="w-20" />
+                      </span>
+                      <span>
+                        <p className="text-gray-700 text-sm font-semibold">
+                          {item.title.slice(0, 80)}...
+                        </p>
+                        <p className="text-gray-700 text-sm font-semibold">
+                          {' '}
+                          ${item.price}{' '}
+                        </p>
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })
+            )}
+          </div>
+        ) : (
+          ''
+        )}
+        {/* SEARCH MODAL END */}
+
         <div>
           <Link to={'/'}>
             {' '}
@@ -28,6 +109,8 @@ const DesktopHeader = () => {
             type="text"
             placeholder="I'm shopping for ..."
             className="bg-gray-200 rounded-2xl py-2 px-4 w-full"
+            value={searchParams}
+            onChange={handleSearchChange}
           />
 
           <img

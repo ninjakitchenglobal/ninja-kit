@@ -21,7 +21,7 @@ const Popular = () => {
         Most Popular Right Now
       </h1>
 
-      <div className="mt-10 flex justify-between overflow-scroll">
+      <div className="mt-10 flex justify-between gap-2 overflow-x-scroll">
         {isLoading ? (
           <span className="block loading loading-ring loading-xl w-25 text-gray-600 mx-auto"></span>
         ) : (
